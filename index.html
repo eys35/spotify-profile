@@ -1,0 +1,295 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>My Spotify Profile</title>
+  <script src="src/script.ts" type="module"></script>
+</head>
+
+<body>
+  <h1>Display your Spotify profile data</h1>
+
+  <section id="profile">
+    <h2>Logged in as <span id="displayName"></span></h2>
+    <span id="avatar"></span>
+    <ul>
+      <li>User ID: <span id="id"></span></li>
+      <li>Email: <span id="email"></span></li>
+      <li>Spotify URI: <a id="uri" href="#"></a></li>
+      <li>Link: <a id="url" href="#"></a></li>
+      <li>Profile Image: <span id="imgUrl"></span></li>
+    </ul>
+  </section>
+
+
+  <section id="search">
+    <h2>Search Track</h2>
+    <input type="text" id="searchQuery" placeholder="Enter track name">
+    <button id="searchButton">Search</button>
+    <div id="searchResults"></div>
+  </section>
+
+  <section id="trackDetails">
+    <h2>Track Details</h2>
+    <p id="trackName"></p>
+    <p id="artistName"></p>
+    <p id="albumName"></p>
+    <img id="albumImage" src="" alt="Album Image">
+    <audio id="trackPreview" controls></audio>
+  </section>
+
+  <section id="trackFeatures">
+    <h2>Track Audio Features</h2>
+    <ul>
+      <li>Danceability: <span id="danceability"></span></li>
+      <li>Energy: <span id="energy"></span></li>
+      <li>Tempo: <span id="tempo"></span></li>
+      <li>Valence: <span id="valence"></span></li>
+      <li>Speechiness: <span id="speechiness"></span></li>
+      <li>Acousticness: <span id="acousticness"></span></li>
+      <li>Instrumentalness: <span id="instrumentalness"></span></li>
+      <li>Liveness: <span id="liveness"></span></li>
+      <li>Loudness: <span id="loudness"></span></li>
+      <li>Key: <span id="key"></span></li>
+      <li>Mode: <span id="mode"></span></li>
+      <li>Time Signature: <span id="time_signature"></span></li>
+      <li>Duration: <span id="duration_ms"></span></li>
+    </ul>
+  </section>
+</body>
+
+</html> -->
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>My Spotify Profile</title>
+  <script src="src/script.ts" type="module"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1,
+    h2 {
+      color: #1DB954;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .column {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .separator {
+      width: 1px;
+      background-color: #ccc;
+      margin: 0 20px;
+    }
+
+    #avatar img {
+      border-radius: 50%;
+    }
+
+    #searchResults div {
+      cursor: pointer;
+      margin-bottom: 5px;
+    }
+
+    #searchResults div:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>TRACK FINDER</h1>
+  <div class="container">
+    <div class="column">
+      <section id="profile">
+        <h2>you are logged in as <span id="displayName"></span></h2>
+        <span id="avatar"></span>
+        <ul>
+          <li>user id: <span id="id"></span></li>
+          <li>email: <span id="email"></span></li>
+          <li>spotify URI: <a id="uri" href="#"></a></li>
+          <li>link: <a id="url" href="#"></a></li>
+          <li>profile image: <span id="imgUrl"></span></li>
+        </ul>
+      </section> -->
+<!-- 
+      <section id="search">
+        <h2>search for a track</h2>
+        <input type="text" id="searchQuery" placeholder="Enter track name">
+        <button id="searchButton">Search</button>
+        <div id="searchResults"></div>
+      </section>
+    </div>
+    <div class="separator"></div>
+    <div class="column">
+      <section id="trackDetails">
+        <h2>Track Details</h2>
+        <p><strong>Name:</strong> <span id="trackName"></span></p>
+        <p><strong>Artist:</strong> <span id="artistName"></span></p>
+        <p><strong>Album:</strong> <span id="albumName"></span></p>
+        <img id="albumImage" src="" alt="Album Image" width="200">
+        <audio id="trackPreview" controls></audio>
+      </section>
+
+      <section id="trackFeatures">
+        <h2>Track Audio Features</h2>
+        <ul>
+          <li>Danceability: <span id="danceability"></span></li>
+          <li>Energy: <span id="energy"></span></li>
+          <li>Tempo: <span id="tempo"></span></li>
+          <li>Valence: <span id="valence"></span></li>
+          <li>Speechiness: <span id="speechiness"></span></li>
+          <li>Acousticness: <span id="acousticness"></span></li>
+          <li>Instrumentalness: <span id="instrumentalness"></span></li>
+          <li>Liveness: <span id="liveness"></span></li>
+          <li>Loudness: <span id="loudness"></span></li>
+          <li>Key: <span id="key"></span></li>
+          <li>Mode: <span id="mode"></span></li>
+          <li>Time Signature: <span id="time_signature"></span></li>
+          <li>Duration: <span id="duration_ms"></span></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>My Spotify Profile</title>
+  <script src="src/script.ts" type="module"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1,
+    h2 {
+      color: #1DB954;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .column {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .separator {
+      width: 1px;
+      background-color: #ccc;
+      margin: 0 20px;
+    }
+
+    #profileDetails {
+      display: flex;
+      align-items: center;
+    }
+
+    #avatar img {
+      border-radius: 50%;
+      margin-right: 20px;
+      width: 100px;
+      height: 100px;
+    }
+
+    #searchResults div {
+      cursor: pointer;
+      margin-bottom: 5px;
+    }
+
+    #searchResults div:hover {
+      text-decoration: underline;
+    }
+
+    #trackDetails img {
+      width: 200px;
+    }
+
+    #trackDetails audio {
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>TRACK FINDER</h1>
+  <div class="container">
+    <div class="column">
+      <section id="profile">
+        <h2>you are logged in as <span id="displayName"></span></h2>
+        <div id="profileDetails">
+          <span id="avatar"></span>
+          <ul>
+            <li>user id: <span id="id"></span></li>
+            <li>email: <span id="email"></span></li>
+            <li>spotify URI: <a id="uri" href="#"></a></li>
+            <li>link: <a id="url" href="#"></a></li>
+            <li>profile image: <span id="imgUrl"></span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="search">
+        <h2>Search Track</h2>
+        <input type="text" id="searchQuery" placeholder="Enter track name">
+        <button id="searchButton">Search</button>
+        <div id="searchResults"></div>
+      </section>
+    </div>
+    <div class="separator"></div>
+    <div class="column">
+      <section id="trackDetails">
+        <h2>Track Details</h2>
+        <p><strong>Name:</strong> <span id="trackName"></span></p>
+        <p><strong>Artist:</strong> <span id="artistName"></span></p>
+        <p><strong>Album:</strong> <span id="albumName"></span></p>
+        <img id="albumImage" src="" alt="Album Image">
+        <audio id="trackPreview" controls></audio>
+      </section>
+
+      <section id="trackFeatures">
+        <h2>Track Audio Features</h2>
+        <ul>
+          <li>Danceability: <span id="danceability"></span></li>
+          <li>Energy: <span id="energy"></span></li>
+          <li>Tempo: <span id="tempo"></span></li>
+          <li>Valence: <span id="valence"></span></li>
+          <li>Speechiness: <span id="speechiness"></span></li>
+          <li>Acousticness: <span id="acousticness"></span></li>
+          <li>Instrumentalness: <span id="instrumentalness"></span></li>
+          <li>Liveness: <span id="liveness"></span></li>
+          <li>Loudness: <span id="loudness"></span></li>
+          <li>Key: <span id="key"></span></li>
+          <li>Mode: <span id="mode"></span></li>
+          <li>Time Signature: <span id="time_signature"></span></li>
+          <li>Duration: <span id="duration_ms"></span></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+
+</html>
