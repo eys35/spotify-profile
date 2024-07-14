@@ -13,6 +13,16 @@ if (!code) {
   if (searchButton) {
     searchButton.addEventListener("click", () => searchTrack(accessToken));
   }
+
+  const applyOptionsButton = document.getElementById("applyOptionsButton");
+  if (applyOptionsButton) {
+    applyOptionsButton.addEventListener("click", () => {
+      const selectedTrackId = (document.getElementById("trackDetails") as any).dataset.trackId;
+      if (selectedTrackId) {
+        fetchTrackAudioFeatures(selectedTrackId, accessToken, true);
+      }
+    });
+  }
 }
 
 export async function redirectToAuthCodeFlow(clientId: string) {
@@ -83,7 +93,7 @@ async function fetchProfile(token: string): Promise<any> {
 function populateUI(profile: any) {
   document.getElementById("displayName")!.innerText = profile.display_name;
   if (profile.images[0]) {
-    const profileImage = new Image(200, 200);
+    const profileImage = new Image(100, 100);
     profileImage.src = profile.images[0].url;
     document.getElementById("avatar")!.appendChild(profileImage);
   }
@@ -118,20 +128,21 @@ function displaySearchResults(tracks: any[], token: string) {
       trackElement.style.cursor = "pointer"; // Indicate that the item is clickable
       trackElement.addEventListener("click", () => {
         displayTrackDetails(track);
-        fetchTrackAudioFeatures(track.id, token);
+        fetchTrackAudioFeatures(track.id, token, false);
       });
       searchResults.appendChild(trackElement);
     });
   }
 }
 
-async function fetchTrackAudioFeatures(trackId: string, token: string) {
+async function fetchTrackAudioFeatures(trackId: string, token: string, applyOptions: boolean) {
   try {
     const result = await fetch(`https://api.spotify.com/v1/audio-features/${trackId}`, {
       method: "GET", headers: { Authorization: `Bearer ${token}` }
     });
     const data = await result.json();
     displayTrackAudioFeatures(data);
+    fetchRecommendations(data, token, applyOptions); // Fetch recommendations based on track features
   } catch (error) {
     console.error("Error fetching audio features:", error);
   }
@@ -149,6 +160,7 @@ function displayTrackDetails(track: any) {
   if (trackPreview) {
     trackPreview.src = track.preview_url;
   }
+  document.getElementById("trackDetails")!.dataset.trackId = track.id; // Store track ID
 }
 
 function translateKey(key: number): string {
@@ -167,19 +179,83 @@ function displayTrackAudioFeatures(features: any) {
   const featuresElement = document.getElementById("trackFeatures");
   if (featuresElement) {
     featuresElement.innerHTML = `
-      <p>Danceability: ${features.danceability}</p>
-      <p>Energy: ${features.energy}</p>
-      <p>Tempo: ${features.tempo}</p>
-      <p>Valence: ${features.valence}</p>
-      <p>Speechiness: ${features.speechiness}</p>
-      <p>Acousticness: ${features.acousticness}</p>
-      <p>Instrumentalness: ${features.instrumentalness}</p>
-      <p>Liveness: ${features.liveness}</p>
-      <p>Loudness: ${features.loudness}</p>
+      <p>Danceability: ${features.danceability ?? 'N/A'}</p>
+      <p>Energy: ${features.energy ?? 'N/A'}</p>
+      <p>Tempo: ${features.tempo ?? 'N/A'}</p>
+      <p>Valence: ${features.valence ?? 'N/A'}</p>
+      <p>Speechiness: ${features.speechiness ?? 'N/A'}</p>
+      <p>Acousticness: ${features.acousticness ?? 'N/A'}</p>
+      <p>Instrumentalness: ${features.instrumentalness ?? 'N/A'}</p>
+      <p>Liveness: ${features.liveness ?? 'N/A'}</p>
+      <p>Loudness: ${features.loudness ?? 'N/A'}</p>
       <p>Key: ${translateKey(features.key)}</p>
       <p>Mode: ${translateMode(features.mode)}</p>
-      <p>Time Signature: ${features.time_signature}</p>
-      <p>Duration: ${features.duration_ms}</p>
+      <p>Time Signature: ${features.time_signature ?? 'N/A'}</p>
+      <p>Duration: ${features.duration_ms ?? 'N/A'}</p>
     `;
+  }
+}
+
+function getSelectedOptions() {
+  const optionsForm = document.getElementById("optionsForm") as HTMLFormElement;
+  const formData = new FormData(optionsForm);
+  const selectedOptions: { [key: string]: boolean } = {};
+  formData.forEach((value, key) => {
+    selectedOptions[key] = true;
+  });
+  return selectedOptions;
+}
+
+async function fetchRecommendations(features: any, token: string, applyOptions: boolean) {
+  try {
+    const params = new URLSearchParams({
+      limit: '10',
+      seed_tracks: features.id
+    });
+
+    if (applyOptions) {
+      const selectedOptions = getSelectedOptions();
+      if (selectedOptions.danceability) {
+        params.append('target_danceability', features.danceability);
+      }
+      if (selectedOptions.energy) {
+        params.append('target_energy', features.energy);
+      }
+      if (selectedOptions.key) {
+        params.append('target_key', features.key);
+      }
+      if (selectedOptions.mode) {
+        params.append('target_mode', features.mode);
+      }
+      if (selectedOptions.tempo) {
+        params.append('target_tempo', features.tempo);
+      }
+    }
+
+    const result = await fetch(`https://api.spotify.com/v1/recommendations?${params.toString()}`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await result.json();
+    displayRecommendations(data.tracks);
+  } catch (error) {
+    console.error("Error fetching recommendations:", error);
+  }
+}
+
+function displayRecommendations(tracks: any[]) {
+  const recommendationsElement = document.getElementById("recommendations");
+  if (recommendationsElement) {
+    recommendationsElement.innerHTML = '<h2>Recommended Tracks</h2>';
+    tracks.forEach(track => {
+      const trackElement = document.createElement("div");
+      trackElement.innerHTML = `
+        <p><strong>${track.name}</strong> by ${track.artists.map((artist: any) => artist.name).join(", ")}</p>
+        <p><strong>Album:</strong> ${track.album.name}</p>
+        <p><strong>Tempo (BPM):</strong> ${track.tempo}</p>
+        <audio controls src="${track.preview_url}"></audio>
+      `;
+      recommendationsElement.appendChild(trackElement);
+    });
   }
 }

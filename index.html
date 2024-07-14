@@ -231,6 +231,26 @@
       display: block;
       margin-top: 10px;
     }
+
+    #recommendations h2 {
+      margin-top: 20px;
+    }
+
+    #recommendations div {
+      margin-bottom: 10px;
+    }
+
+    #recommendations p {
+      margin: 0;
+    }
+
+    #recommendations audio {
+      margin-top: 5px;
+    }
+
+    #recommendationOptions {
+      margin-top: 20px;
+    }
   </style>
 </head>
 
@@ -253,41 +273,58 @@
       </section>
 
       <section id="search">
-        <h2>Search Track</h2>
+        <h2>search for a track</h2>
         <input type="text" id="searchQuery" placeholder="Enter track name">
-        <button id="searchButton">Search</button>
+        <button id="searchButton">search</button>
         <div id="searchResults"></div>
       </section>
     </div>
     <div class="separator"></div>
     <div class="column">
       <section id="trackDetails">
-        <h2>Track Details</h2>
-        <p><strong>Name:</strong> <span id="trackName"></span></p>
-        <p><strong>Artist:</strong> <span id="artistName"></span></p>
-        <p><strong>Album:</strong> <span id="albumName"></span></p>
+        <h2>track details</h2>
+        <p><strong>name:</strong> <span id="trackName"></span></p>
+        <p><strong>artist:</strong> <span id="artistName"></span></p>
+        <p><strong>album:</strong> <span id="albumName"></span></p>
         <img id="albumImage" src="" alt="Album Image">
         <audio id="trackPreview" controls></audio>
       </section>
 
       <section id="trackFeatures">
-        <h2>Track Audio Features</h2>
+        <h2>track audio features</h2>
         <ul>
-          <li>Danceability: <span id="danceability"></span></li>
-          <li>Energy: <span id="energy"></span></li>
-          <li>Tempo: <span id="tempo"></span></li>
-          <li>Valence: <span id="valence"></span></li>
-          <li>Speechiness: <span id="speechiness"></span></li>
-          <li>Acousticness: <span id="acousticness"></span></li>
-          <li>Instrumentalness: <span id="instrumentalness"></span></li>
-          <li>Liveness: <span id="liveness"></span></li>
-          <li>Loudness: <span id="loudness"></span></li>
-          <li>Key: <span id="key"></span></li>
-          <li>Mode: <span id="mode"></span></li>
-          <li>Time Signature: <span id="time_signature"></span></li>
-          <li>Duration: <span id="duration_ms"></span></li>
+          <li>danceability: <span id="danceability"></span></li>
+          <li>energy: <span id="energy"></span></li>
+          <li>tempo: <span id="tempo"></span></li>
+          <li>valence: <span id="valence"></span></li>
+          <li>speechiness: <span id="speechiness"></span></li>
+          <li>acousticness: <span id="acousticness"></span></li>
+          <li>instrumentalness: <span id="instrumentalness"></span></li>
+          <li>liveness: <span id="liveness"></span></li>
+          <li>loudness: <span id="loudness"></span></li>
+          <li>key: <span id="key"></span></li>
+          <li>mode: <span id="mode"></span></li>
+          <li>time signature: <span id="time_signature"></span></li>
+          <li>duration: <span id="duration_ms"></span></li>
         </ul>
       </section>
+
+      <section id="recommendationOptions">
+        <h2>recommendation options</h2>
+        <form id="optionsForm">
+          <label><input type="checkbox" name="danceability" checked> danceability</label><br>
+          <label><input type="checkbox" name="energy" checked> energy</label><br>
+          <label><input type="checkbox" name="key" checked> key</label><br>
+          <label><input type="checkbox" name="mode" checked> mode</label><br>
+          <label><input type="checkbox" name="tempo" checked> tempo</label><br>
+        </form>
+        <button id="applyOptionsButton">apply options</button>
+      </section>
+
+      <section id="recommendations">
+        <!-- Recommendations will be displayed here -->
+      </section>
+
     </div>
   </div>
 </body>
