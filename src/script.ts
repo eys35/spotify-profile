@@ -179,19 +179,19 @@ function displayTrackAudioFeatures(features: any) {
   const featuresElement = document.getElementById("trackFeatures");
   if (featuresElement) {
     featuresElement.innerHTML = `
-      <p>Danceability: ${features.danceability ?? 'N/A'}</p>
-      <p>Energy: ${features.energy ?? 'N/A'}</p>
-      <p>Tempo: ${features.tempo ?? 'N/A'}</p>
-      <p>Valence: ${features.valence ?? 'N/A'}</p>
-      <p>Speechiness: ${features.speechiness ?? 'N/A'}</p>
-      <p>Acousticness: ${features.acousticness ?? 'N/A'}</p>
-      <p>Instrumentalness: ${features.instrumentalness ?? 'N/A'}</p>
-      <p>Liveness: ${features.liveness ?? 'N/A'}</p>
-      <p>Loudness: ${features.loudness ?? 'N/A'}</p>
-      <p>Key: ${translateKey(features.key)}</p>
-      <p>Mode: ${translateMode(features.mode)}</p>
-      <p>Time Signature: ${features.time_signature ?? 'N/A'}</p>
-      <p>Duration: ${features.duration_ms ?? 'N/A'}</p>
+      <p><strong>danceability:</strong> ${features.danceability ?? 'N/A'}</p>
+      <p><strong>energy:</strong> ${features.energy ?? 'N/A'}</p>
+      <p><strong>tempo:</strong> ${features.tempo ?? 'N/A'}</p>
+      <p><strong>valence:</strong> ${features.valence ?? 'N/A'}</p>
+      <p><strong>speechiness:</strong> ${features.speechiness ?? 'N/A'}</p>
+      <p><strong>acousticness:</strong> ${features.acousticness ?? 'N/A'}</p>
+      <p><strong>instrumentalness:</strong> ${features.instrumentalness ?? 'N/A'}</p>
+      <p><strong>liveness:</strong> ${features.liveness ?? 'N/A'}</p>
+      <p><strong>loudness:</strong> ${features.loudness ?? 'N/A'}</p>
+      <p><strong>key:</strong> ${translateKey(features.key)}</p>
+      <p><strong>mode:</strong> ${translateMode(features.mode)}</p>
+      <p><strong>time signature:</strong> ${features.time_signature ?? 'N/A'}</p>
+      <p><strong>duration:</strong> ${features.duration_ms ?? 'N/A'}</p>
     `;
   }
 }
@@ -208,8 +208,11 @@ function getSelectedOptions() {
 
 async function fetchRecommendations(features: any, token: string, applyOptions: boolean) {
   try {
+    const numRecommendationsElement = document.getElementById("numRecommendations") as HTMLInputElement;
+    const numRecommendations = numRecommendationsElement ? parseInt(numRecommendationsElement.value) : 10;
+
     const params = new URLSearchParams({
-      limit: '10',
+      limit: numRecommendations.toString(),
       seed_tracks: features.id
     });
 
@@ -237,25 +240,58 @@ async function fetchRecommendations(features: any, token: string, applyOptions: 
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await result.json();
-    displayRecommendations(data.tracks);
+    await displayRecommendations(data.tracks, token);
   } catch (error) {
     console.error("Error fetching recommendations:", error);
   }
 }
 
-function displayRecommendations(tracks: any[]) {
+async function displayRecommendations(tracks: any[], token: string) {
   const recommendationsElement = document.getElementById("recommendations");
   if (recommendationsElement) {
-    recommendationsElement.innerHTML = '<h2>Recommended Tracks</h2>';
-    tracks.forEach(track => {
+    recommendationsElement.innerHTML = '<h2>recommended tracks</h2>';
+    for (const track of tracks) {
       const trackElement = document.createElement("div");
+      trackElement.className = "track";
+
+      const albumImage = track.album.images[0]?.url ? `<img src="${track.album.images[0].url}" alt="Album cover">` : '';
+      const audioPlayer = track.preview_url ? `<audio controls src="${track.preview_url}"></audio>` : '';
+
+      const detailsHTML = `
+        <div class="details">
+          <p><a href="${track.external_urls.spotify}" target="_blank"><strong>${track.name}</strong></a> by ${track.artists.map((artist: any) => artist.name).join(", ")}</p>
+          <p><strong>album:</strong> ${track.album.name}</p>
+          <p><strong>tempo (bpm):</strong> ${await fetchTrackFeature(track.id, token, 'tempo')}</p>
+          <p><strong>danceability:</strong> ${await fetchTrackFeature(track.id, token, 'danceability')}</p>
+          <p><strong>energy:</strong> ${await fetchTrackFeature(track.id, token, 'energy')}</p>
+          <p><strong>key:</strong> ${translateKey(await fetchTrackFeature(track.id, token, 'key'))}</p>
+        </div>
+      `;
+
       trackElement.innerHTML = `
-        <p><strong>${track.name}</strong> by ${track.artists.map((artist: any) => artist.name).join(", ")}</p>
-        <p><strong>Album:</strong> ${track.album.name}</p>
-        <p><strong>Tempo (BPM):</strong> ${track.tempo}</p>
-        <audio controls src="${track.preview_url}"></audio>
+        ${detailsHTML}
+        <div class="audio-album">
+          ${audioPlayer}
+          <div class="album">${albumImage}</div>
+        </div>
       `;
       recommendationsElement.appendChild(trackElement);
-    });
+    }
   }
+}
+
+async function fetchTrackFeature(trackId: string, token: string, feature: string) {
+  const result = await fetch(`https://api.spotify.com/v1/audio-features/${trackId}`, {
+    method: "GET", headers: { Authorization: `Bearer ${token}` }
+  });
+  const data = await result.json();
+  return data[feature];
+}
+
+
+async function fetchTrackFeatures(trackId: string, token: string) {
+  const result = await fetch(`https://api.spotify.com/v1/audio-features/${trackId}`, {
+    method: "GET", headers: { Authorization: `Bearer ${token}` }
+  });
+  return await result.json();
 }
