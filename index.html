@@ -4,224 +4,79 @@
 <head>
   <meta charset="utf-8">
   <title>next song, pls!</title>
-  <script type="module" src="src/script.ts"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-
-    h1,
-    h2 {
-      color: #ec9adb;
-      text-transform: lowercase;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .top-section {
-      display: flex;
-      margin-bottom: 100px;
-      min-height: 750px;
-    }
-
-    .column {
-      flex: 1;
-      padding: 20px;
-    }
-
-    .column1 {
-      padding: 20px;
-      box-sizing: border-box;
-      overflow-y: auto;
-    }
-
-    .separator {
-      width: 1px;
-      background-color: #ccc;
-      height: 100%;
-    }
-
-    .horizontal-separator {
-      height: 1px;
-      background-color: #ccc;
-      margin: 0;
-    }
-
-    #profileDetails {
-      display: flex;
-      align-items: center;
-    }
-
-    #avatar img {
-      border-radius: 50%;
-      margin-right: 20px;
-      width: 100px;
-      height: 100px;
-    }
-
-    #searchResults div {
-      cursor: pointer;
-    }
-
-    #searchResults div:hover {
-      text-decoration: underline;
-    }
-
-    #trackDetails img {
-      width: 300px;
-    }
-
-    #trackDetails audio {
-      display: block;
-      margin-top: 10px;
-    }
-
-    .track-details p {
-      margin: 5px 0;
-      text-transform: lowercase;
-    }
-
-    #recommendations {
-      max-height: 800px;
-      overflow-y: auto;
-      padding-right: 20px;
-    }
-
-    .track {
-      display: flex;
-      align-items: center;
-      margin-bottom: 40px;
-    }
-
-    .track .details {
-      flex: 2;
-      margin-right: 20px;
-      /* Space between details and track player */
-    }
-
-    .track .audio-album {
-      display: flex;
-      align-items: center;
-    }
-
-    .track .album {
-      margin-left: 20px;
-      /* Space between track player and album image */
-    }
-
-    .track .album img {
-      width: 160px;
-      height: 160px;
-    }
-
-    .track audio {
-      margin-right: 20px;
-    }
-
-    .track .details p {
-      margin: 2px 0;
-      /* Reduce the space between paragraphs */
-    }
-
-
-    .bottom-section {
-      display: flex;
-      align-items: flex-start;
-      flex: 1;
-    }
-
-    label {
-      text-transform: lowercase;
-    }
-
-    .track {
-      display: flex;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
-    .track .details {
-      flex: 1;
-    }
-
-    .track .album {
-      margin-left: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .track .album img {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 5px;
-    }
-  </style>
+  <script type="module" src="src/script.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h1>track recommender</h1>
-  <button id="loginButton">login with spotify</button>
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="nav-left">
+      <h1>Next Song, Pls!</h1>
+    </div>
+    <div class="nav-right">
+      <button id="loginButton">
+        <img src="./spotify.png" alt="Spotify Logo">
+        Log in with Spotify
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- Main Content -->
   <div class="container">
     <div class="top-section">
-      <div class="column">
+      <div class="column" id="leftSearch">
         <section id="profile">
-          <h2>hi <span id="displayName">! </span></h2>
-          <div id="profileDetails">
-            <span id="avatar"></span>
-            <ul>
-              <li>user id: <span id="id"></span></li>
-              <li>email: <span id="email"></span></li>
-              <li>spotify uri: <a id="uri" href="#"></a></li>
-              <li>link: <a id="url" href="#"></a></li>
-              <li>profile image: <span id="imgUrl"></span></li>
-            </ul>
-          </div>
+          <h2 id="welcomeMessage" hidden>hi <span id="displayName">!</span></h2>
         </section>
 
-        <section id="search">
-          <h2>search track</h2>
+        <section id="search" hidden>
+          <h2>what's next?</h2>
           <input type="text" id="searchQuery" placeholder="enter track name">
-          <button id="searchButton">search</button>
+          <button id="searchButton">let's go!</button>
           <div id="searchResults"></div>
         </section>
       </div>
       <div class="separator"></div>
-      <div class="column">
-        <section id="trackDetails" class="track-details">
-          <h2>track details</h2>
-          <p><strong>name:</strong> <span id="trackName"></span></p>
-          <p><strong>artist:</strong> <span id="artistName"></span></p>
-          <p><strong>album:</strong> <span id="albumName"></span></p>
-          <img id="albumImage" src="" alt="album image">
-          <audio id="trackPreview" controls></audio>
-          <div id="trackFeatures">
-            <p><strong>danceability:</strong> <span id="danceability"></span></p>
-            <p><strong>energy:</strong> <span id="energy"></span></p>
-            <p><strong>tempo:</strong> <span id="tempo"></span></p>
-            <p><strong>valence:</strong> <span id="valence"></span></p>
-            <p><strong>speechiness:</strong> <span id="speechiness"></span></p>
-            <p><strong>acousticness:</strong> <span id="acousticness"></span></p>
-            <p><strong>instrumentalness:</strong> <span id="instrumentalness"></span></p>
-            <p><strong>liveness:</strong> <span id="liveness"></span></p>
-            <p><strong>loudness:</strong> <span id="loudness"></span></p>
-            <p><strong>key:</strong> <span id="key"></span></p>
-            <p><strong>mode:</strong> <span id="mode"></span></p>
-            <p><strong>time signature:</strong> <span id="time_signature"></span></p>
-            <p><strong>duration:</strong> <span id="duration_ms"></span></p>
-          </div>
-        </section>
-      </div>
+      <section id="rightTrackDescription" hidden>
+        <div class="column">
+          <section id="trackDetails" hidden class="track-details">
+            <div class="track-info">
+              <div class="left-section">
+                <h1 id="trackName"></h1> <!-- Larger font for track name -->
+                <h2 id="artistName"></h2> <!-- Slightly smaller font for artist name -->
+                <h3 id="albumName"></h3> <!-- Smaller font for album name -->
+                <img id="albumImage" src="" alt="album image">
+                <audio id="trackPreview" controls></audio>
+              </div>
+              <div class="right-section">
+                <div id="trackFeatures">
+                  <p><strong>Danceability:</strong> <span id="danceability"></span></p>
+                  <p><strong>Energy:</strong> <span id="energy"></span></p>
+                  <p><strong>Tempo:</strong> <span id="tempo"></span></p>
+                  <p><strong>Valence:</strong> <span id="valence"></span></p>
+                  <p><strong>Speechiness:</strong> <span id="speechiness"></span></p>
+                  <p><strong>Acousticness:</strong> <span id="acousticness"></span></p>
+                  <p><strong>Instrumentalness:</strong> <span id="instrumentalness"></span></p>
+                  <p><strong>Liveness:</strong> <span id="liveness"></span></p>
+                  <p><strong>Loudness:</strong> <span id="loudness"></span></p>
+                  <p><strong>Key:</strong> <span id="key"></span></p>
+                  <p><strong>Mode:</strong> <span id="mode"></span></p>
+                  <p><strong>Time Signature:</strong> <span id="time_signature"></span></p>
+                  <p><strong>Duration:</strong> <span id="duration_ms"></span></p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
     </div>
 
     <div class="horizontal-separator"></div>
 
     <div class="bottom-section">
-      <section id="recommendationOptions" class="column1">
+      <section id="recommendationOptions" hidden class="column1">
         <h2>recommendation options</h2>
         <form id="optionsForm">
           <label><input type="checkbox" name="danceability" checked> danceability</label><br>
@@ -245,6 +100,10 @@
 </body>
 
 </html>
+
+
+</html>
+
 
 <!-- 
 <!DOCTYPE html>

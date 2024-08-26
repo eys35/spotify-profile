@@ -41,6 +41,8 @@
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
+    "outDir": "./dist", // This outputs the compiled JS to the main directory
+    "rootDir": "./src",
     "esModuleInterop": true,
     "lib": [
       "esnext",

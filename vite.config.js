@@ -5,7 +5,8 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: {
-        main: './index.html'
+        main: './index.html',
+        script: './src/script.ts'  // Add this line to include script.ts
       },
       output: {
         entryFileNames: '[name].js',

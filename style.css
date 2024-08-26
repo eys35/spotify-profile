@@ -1,12 +1,11 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Playfair Display', serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color: #333333;
+  background-color: #f5f5dc;
+  /* Beige background */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,89 +14,435 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #4F4F4C;
+  /* SaddleBrown color for links */
   text-decoration: inherit;
 }
 
 a:hover {
-  color: #535bf2;
+  color: #4F4F4C;
+  /* Sienna color for hover effect */
 }
 
+/* Navigation Bar */
+nav {
+  width: 100%;
+  background-color: #4F4F4C;
+  /* Charcoal color for the nav bar */
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.nav-left h1 {
+  font-size: 1.5rem;
+  color: #f5f5dc;
+  /* Match with the background color */
+  font-family: 'Playfair Display', serif;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-right #loginButton {
+  padding: 10px 20px;
+  background-color: #f5f5dc;
+  /* Light beige color */
+  border: none;
+  border-radius: 4px;
+  color: #4F4F4C;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: 'Playfair Display', serif;
+}
+
+.nav-right #loginButton img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  /* Space between logo and text */
+}
+
+.nav-right #loginButton:hover {
+  background-color: #c19a6b;
+  /* Light brown color for hover */
+}
+
+/* Adjust body margin to account for fixed nav bar */
 body {
   margin: 0;
+  padding-top: 80px;
+  /* Add padding at the top to avoid overlap with the nav bar */
+  font-family: 'Playfair Display', serif;
+  background-color: #f5f5dc;
+  /* Beige background */
+  color: #333333;
+  /* Dark text for contrast */
+}
+
+/* Container */
+.container {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.top-section {
+  display: flex;
+  margin-bottom: 100px;
+  min-height: 750px;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.column1 {
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.column {
+  flex: 1;
+  padding: 5px;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.separator {
+  width: 1px;
+  background-color: #ccc;
+  height: 100%;
 }
 
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
+.horizontal-separator {
+  height: 1px;
+  background-color: #ccc;
+  margin: 0;
 }
 
-.card {
-  padding: 2em;
+
+.column {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  /* Align child elements (including right track description) to the left */
+  padding: 10px;
+  /* Adjust this to balance the layout */
 }
 
-.read-the-docs {
-  color: #888;
+/* Style the login button after login */
+#loginButton.logged-in {
+  background-color: #4F4F4C;
+  /* Keep the same background color */
+  color: #f5f5dc;
+  /* Keep the same text color */
+  padding: 15px 30px;
+  /* Increase the padding for a larger button */
+  font-size: 1.25rem;
+  /* Increase the font size */
+  font-weight: 700;
+  /* Make the font bolder */
+  transition: all 0.3s ease;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+/* Hide Spotify logo once logged in */
+#loginButton.logged-in img {
+  display: none;
+}
+
+#profileDetails {
+  display: flex;
+  align-items: left;
+}
+
+#avatar img {
+  border-radius: 50%;
+  margin-right: 20px;
+  width: 100px;
+  height: 100px;
+}
+
+#searchResults div {
   cursor: pointer;
-  transition: border-color 0.25s;
 }
 
-button:hover {
-  border-color: #646cff;
+#searchResults div:hover {
+  text-decoration: underline;
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+#trackDetails img {
+  align-items: flex-start;
+  width: 300px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
+#trackDetails audio {
+  align-items: flex-start;
+  display: block;
+  margin-top: 10px;
+}
 
-  a:hover {
-    color: #747bff;
-  }
+.track-details p {
+  margin: 5px 0;
+  text-transform: lowercase;
+  color: #f5f5dc;
+  /* Charcoal color for text */
+}
 
-  button {
-    background-color: #f9f9f9;
-  }
+/* #recommendations {
+  max-height: 800px;
+  overflow-y: auto;
+  padding-right: 20px;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.track .details {
+  flex: 2;
+  margin-right: 20px;
+}
+
+.track .audio-album {
+  display: flex;
+  align-items: center;
+}
+
+.track .album {
+  margin-left: 20px;
+}
+
+.track .album img {
+  width: 160px;
+  height: 160px;
+  border-radius: 4px;
+}
+
+.track audio {
+  margin-right: 20px;
+}
+
+.track .details p {
+  margin: 2px 0;
+}
+
+.bottom-section {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+  background-color: #f5f5dc;
+} 
+*/
+#recommendations {
+  max-height: 800px;
+  overflow-y: auto;
+  padding-right: 20px;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.track .details {
+  flex: 2;
+  margin-right: 100px;
+  /* Space between details and track player */
+}
+
+.track .audio-album {
+  display: flex;
+  align-items: center;
+}
+
+.track .album {
+  margin-left: 20px;
+  /* Space between track player and album image */
+}
+
+.track .album img {
+  width: 160px;
+  height: 160px;
+}
+
+.track audio {
+  margin-right: 20px;
+}
+
+.track .details p {
+  margin: 2px 0;
+  /* Reduce the space between paragraphs */
+}
+
+
+.bottom-section {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+}
+
+label {
+  text-transform: lowercase;
+}
+
+/* Hide profile details before login */
+#profileDetails ul {
+  list-style: none;
+  padding: 0;
+}
+
+#profileDetails li {
+  display: none;
+}
+
+body.logged-in #profileDetails li {
+  display: list-item;
+}
+
+body.logged-in #profileDetails {
+  display: flex;
+}
+
+.track-details {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #4a3728;
+  border-radius: 8px;
+  color: #f5f5dc;
+  margin-top: 40px;
+}
+
+.track-info {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  color: #f5f5dc;
+}
+
+.left-section {
+  flex: 2;
+  text-align: left;
+  margin-right: 20px;
+
+}
+
+.left-section h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.left-section h2 {
+  font-size: 2rem;
+  margin: 10px 0;
+  color: #f5f5dc;
+  /* Beige color for headings */
+}
+
+.left-section h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: #f5f5dc;
+  /* Beige color for subheadings */
+}
+
+.left-section img {
+  width: 300px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.right-section {
+  flex: 1;
+  text-align: right;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-section audio {
+  margin-bottom: 20px;
+}
+
+.right-section #trackFeatures p {
+  margin: 5px 0;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+.right-section #trackFeatures p strong {
+  color: #f5f5dc;
+  /* Beige color for strong labels */
+  align-items: flex-start;
+  margin-right: 20px;
+}
+
+/* Style for the "Apply Options" button */
+#applyOptionsButton {
+  padding: 10px 20px;
+  background-color: #4F4F4C;
+  /* Charcoal color */
+  border: none;
+  border-radius: 4px;
+  color: #f5f5dc;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Playfair Display', serif;
+  box-sizing: border-box;
+  margin-top: 10px;
+  /* Add some margin at the top */
+}
+
+#applyOptionsButton:hover {
+  background-color: #c19a6b;
+  /* Light brown color for hover */
+}
+
+#search {
+  max-width: 400px;
+  /* Adjust the width as needed */
+  margin: 0;
+  /* Center the search bar horizontally */
+}
+
+/* Style for the search bar */
+#search input[type="text"],
+#search button {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  border: 1px solid #4F4F4C;
+  color: #4F4F4C;
+  box-sizing: border-box;
+}
+
+#search button {
+  background-color: #f5f5dc;
+  /* Light beige color */
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#search button:hover {
+  background-color: #c19a6b;
+  /* Light brown color for hover */
+}
+
+#leftSearch {
+  padding: 5px;
+  /* Reduce padding for more space */
 }
