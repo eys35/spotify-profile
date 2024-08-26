@@ -177,6 +177,7 @@ body {
   text-decoration: underline;
 }
 
+/* 
 #trackDetails img {
   align-items: flex-start;
   width: 300px;
@@ -193,7 +194,8 @@ body {
   text-transform: lowercase;
   color: #f5f5dc;
   /* Charcoal color for text */
-}
+
+
 
 /* #recommendations {
   max-height: 800px;
@@ -335,24 +337,26 @@ body.logged-in #profileDetails {
   flex: 2;
   text-align: left;
   margin-right: 20px;
+  min-width: 300px;
 
 }
 
 .left-section h1 {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   margin: 0;
 }
 
 .left-section h2 {
-  font-size: 2rem;
-  margin: 10px 0;
+  font-size: 1.5rem;
+  margin: 5px 0;
+  font-weight: 100;
   color: #f5f5dc;
   /* Beige color for headings */
 }
 
 .left-section h3 {
-  font-size: 1.5rem;
-  margin: 10px 0;
+  font-size: 1rem;
+  margin: 5px 0;
   color: #f5f5dc;
   /* Beige color for subheadings */
 }
@@ -361,6 +365,7 @@ body.logged-in #profileDetails {
   width: 300px;
   border-radius: 8px;
   margin-top: 20px;
+  align-content: center;
 }
 
 .right-section {
@@ -445,4 +450,47 @@ body.logged-in #profileDetails {
 #leftSearch {
   padding: 5px;
   /* Reduce padding for more space */
+}
+
+#rightTrackDescription {
+  padding-top: 30px;
+  width: auto;
+  min-width: 600px;
+  /* Adjusted from 500px to provide more space */
+  text-align: left;
+}
+
+.track-info {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  color: #f5f5dc;
+}
+
+.left-section {
+  flex: 2;
+  text-align: left;
+  margin-right: 20px;
+}
+
+.right-section {
+  padding-top: 50px;
+  flex: 1;
+  text-align: left;
+  /* Changed from right to left for better alignment */
+  margin-top: 20px;
+  /* Reduced margin for better fitting */
+  display: flex;
+  flex-direction: column;
+}
+
+.right-section p {
+  margin: 5px 0;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+.right-section audio {
+  margin-top: 10px;
+  /* Adjust spacing if needed */
 }
